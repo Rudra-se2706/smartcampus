@@ -63,7 +63,11 @@
         });
         const data = await res.json();
         document.getElementById('loadingSpinner').classList.add('hidden');
-        document.getElementById('answerText').textContent = data.answer || data.error || 'Something went wrong.';
+        document.getElementById('answerText').innerHTML = data.answer
+  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  .replace(/\*(.*?)\*/g, '<em>$1</em>')
+  .replace(/```[\w]*\n?([\s\S]*?)```/g, '<pre class="bg-gray-100 rounded p-3 text-sm font-mono mt-2 overflow-x-auto">$1</pre>')
+  .replace(/\n/g, '<br>');
       } catch (err) {
         document.getElementById('loadingSpinner').classList.add('hidden');
         document.getElementById('answerText').textContent = 'Error connecting to AI. Please try again.';

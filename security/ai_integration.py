@@ -1,17 +1,26 @@
-import google.generativeai as genai
+from groq import Groq
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-model = genai.GenerativeModel('gemini-2.0-flash')
+client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 
 def ask_ai(question):
     try:
-        prompt = f"""You are a helpful academic assistant for college students.
-Answer this question clearly and concisely: {question}"""
-        response = model.generate_content(prompt)
-        return {"answer": response.text, "error": None}
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful academic assistant for college students. Answer questions clearly and concisely."
+                },
+                {
+                    "role": "user",
+                    "content": question
+                }
+            ]
+        )
+        return {"answer": response.choices[0].message.content, "error": None}
     except Exception as e:
         return {"answer": None, "error": str(e)}
