@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+flask-bcrypt
+flask-jwt-extended
+google-generativeai
+python-dotenv
+pytest
+gunicorn
+eventlet
