@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard – SmartCampus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-indigo-600 text-white px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">SmartCampus</h1>
+    <div class="flex gap-6 text-sm font-medium">
+      <a href="/dashboard" class="hover:underline">Dashboard</a>
+      <a href="/notices" class="hover:underline">Notices</a>
+      <a href="/groups" class="hover:underline">Study Groups</a>
+      <a href="/ai" class="hover:underline">AI Assistant</a>
+      <a href="/security" class="hover:underline">Security</a>
+      <a href="/logout" class="hover:underline text-red-200">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Welcome Card -->
+    <div class="bg-indigo-600 text-white rounded-2xl p-8 mb-8 shadow">
+      <h2 class="text-3xl font-bold mb-1">Welcome back, {{ user.name }}! 👋</h2>
+      <p class="text-indigo-200">Here's what's happening on campus today.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <a href="/notices" class="bg-white rounded-xl p-5 shadow text-center hover:shadow-md transition">
+        <div class="text-3xl mb-2">📢</div>
+        <p class="font-semibold text-gray-700">Notices</p>
+      </a>
+      <a href="/groups" class="bg-white rounded-xl p-5 shadow text-center hover:shadow-md transition">
+        <div class="text-3xl mb-2">📚</div>
+        <p class="font-semibold text-gray-700">Study Groups</p>
+      </a>
+      <a href="/ai" class="bg-white rounded-xl p-5 shadow text-center hover:shadow-md transition">
+        <div class="text-3xl mb-2">🤖</div>
+        <p class="font-semibold text-gray-700">AI Assistant</p>
+      </a>
+      <a href="/security" class="bg-white rounded-xl p-5 shadow text-center hover:shadow-md transition">
+        <div class="text-3xl mb-2">🔒</div>
+        <p class="font-semibold text-gray-700">Security Log</p>
+      </a>
+    </div>
+
+    <!-- Recent Notices -->
+    <div class="bg-white rounded-2xl shadow p-6">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">Recent Notices</h3>
+      {% if notices %}
+        {% for notice in notices %}
+        <div class="border-b border-gray-100 py-3 last:border-0">
+          <p class="font-semibold text-gray-700">{{ notice.title }}</p>
+          <p class="text-gray-500 text-sm mt-1">{{ notice.content }}</p>
+          <p class="text-xs text-gray-400 mt-1">{{ notice.created.strftime('%d %b %Y') }}</p>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-gray-400 text-sm">No notices yet. Check back later!</p>
+      {% endif %}
+    </div>
+
+  </div>
+</body>
+</html>
